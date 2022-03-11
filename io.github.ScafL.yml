@@ -9,19 +9,17 @@ finish-args:
   - --socket=wayland
   - --share=network
   - --device=dri
-  - --allow=devel
-  - --filesystem=xdg-data
-  - --filesystem=xdg-documents
-  - --filesystem=xdg-data/Steam:ro
-  - --filesystem=~/.var/app/com.valvesoftware.Steam:ro
 modules:
   - name: scafl
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app --root=/
+      - python3 -m pip install . --root=/ --prefix=/app
+    build-options:
+      build-args:
+        - "--share=network"
     sources:
-      - type: archive
-        url: https://github.com/DragonOfWar/scafl/archive/refs/tags/v0.5.0-test.tar.gz
-        sha256: d21c31e522f0086b88ab97eafe90795c2a98e3b8774d60a3d4ad8fbcd4b575e9
+      - type: git
+        branch: main
+        url: https://github.com/DragonOfWar/scafl.git
     modules:
       - python3-scafl.json
